@@ -1,30 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './index.css';
 import { FronteggProvider } from '@frontegg/react';
-
-const contextOptions = {
-  baseUrl: 'https://app-2s55dwpeeoii.frontegg.com',
-  clientId: 'd792a79c-a4a6-4368-a829-7610367e8a2d',
-  appId: 'f1989c90-10f2-4189-9b74-1019f259a966',
-};
+import { contextOptions } from './frontegg.config';
 
 const authOptions = {
-  keepSessionAlive: true,
+  loginBox: {
+    showRememberMe: true,
+    showSignUp: true,
+  }
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <FronteggProvider
-    contextOptions={contextOptions}
-    hostedLoginBox={true}
-    authOptions={authOptions}
-  >
-    <App />
-  </FronteggProvider>
+  <React.StrictMode>
+    <FronteggProvider contextOptions={contextOptions} authOptions={authOptions} hostedLoginBox={false}>
+      <App />
+    </FronteggProvider>
+  </React.StrictMode>
 );
-
-
-
-
-
