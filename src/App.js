@@ -1,4 +1,3 @@
-import './App.css';
 import { useEffect } from 'react';
 import { useAuth, useLoginWithRedirect, ContextHolder, AdminPortal } from "@frontegg/react";
 
@@ -13,7 +12,7 @@ function App() {
   }, [isAuthenticated, loginWithRedirect]);
 
   const logout = () => {
-    const baseUrl = ContextHolder.getContext().baseUrl;
+    const baseUrl = ContextHolder.for().getContext().baseUrl;
     window.location.href = `${baseUrl}/oauth/logout?post_logout_redirect_uri=${window.location.href}`;
   };
 
@@ -22,24 +21,18 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div style={{ textAlign: 'center', marginTop: '40px' }}>
       {isAuthenticated ? (
-        <div>
-          <img src={user?.profilePictureUrl} alt={user?.name} width="100" />
-          <h2>Logged in as: {user?.name}</h2>
-
-          <button onClick={() => alert(user.accessToken)}>
-            Show Access Token
-          </button>
-
-          <button onClick={logout}>Logout</button>
-
+        <>
+          <img src={user?.profilePictureUrl} alt={user?.name} width="100" style={{ borderRadius: '50%' }} />
+          <h2>Welcome, {user?.name}</h2>
+          <p>{user?.email}</p>
           <button onClick={openSettings}>Settings</button>
-        </div>
+          <br /><br />
+          <button onClick={logout}>Logout</button>
+        </>
       ) : (
-        <div>
-          <button onClick={() => loginWithRedirect()}>Login</button>
-        </div>
+        <p>Redirecting to login...</p>
       )}
     </div>
   );
